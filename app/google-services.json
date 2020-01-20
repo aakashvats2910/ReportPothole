@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "119128976305",
+    "firebase_url": "https://reportpothole-aa379.firebaseio.com",
+    "project_id": "reportpothole-aa379",
+    "storage_bucket": "reportpothole-aa379.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119128976305:android:0def0773fda2d8b6c9ab90",
+        "android_client_info": {
+          "package_name": "com.myidea.sih.reportpothole"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "119128976305-1cl4o805bk3mrrbn7shih7nggt8k50sr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.myidea.sih.reportpothole",
+            "certificate_hash": "7f5357c430cf7584aa27ecd8e762715b212acccb"
+          }
+        },
+        {
+          "client_id": "119128976305-ujs5tnh00iejb15sue7cr54ne00pgmo5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQaIDcQnZwGivRNEfLmsadYMUYjm7E1_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "119128976305-ujs5tnh00iejb15sue7cr54ne00pgmo5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

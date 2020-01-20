@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Report Pothole</string>
+    <string name="title_activity_mark_pothole">Map</string>
+    <string name="title_activity_govt_see_full_complaint">Map</string>
+</resources>
