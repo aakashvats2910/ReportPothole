@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //TODO check the input of the mobile number and its validtion.
                 //To sed OTP to the entered mobile number.
-                senOTP("+1" + mobile_edit_text.getText().toString(), MainActivity.this);
+                senOTP("+91" + mobile_edit_text.getText().toString(), MainActivity.this);
             }
         });
 
