@@ -66,11 +66,11 @@
             android:hint="Add comment!"/>
 
         <Button
-            android:id="@+id/civil_fullcomplaint_choose_agency_button"
+            android:id="@+id/civil_fullcomplaint_mark_complete"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CHOOSE AGENCY"/>
+            android:text="MARK SOLVED"/>
 
     </RelativeLayout>
 

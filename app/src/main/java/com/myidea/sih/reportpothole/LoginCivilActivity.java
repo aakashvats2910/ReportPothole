@@ -29,6 +29,8 @@ public class LoginCivilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_civil);
 
+        setTitle("Civil Agency Login");
+
         civil_login_button = findViewById(R.id.civil_login_button);
         civil_password_edit_text = findViewById(R.id.civil_password_edit_text);
         civil_username_edit_text = findViewById(R.id.civil_username_edit_text);
@@ -36,8 +38,15 @@ public class LoginCivilActivity extends AppCompatActivity {
         civil_login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginInDatabaseAsCivil(civil_username_edit_text.getText().toString(),
-                        civil_password_edit_text.getText().toString());
+                if (civil_password_edit_text.getText().toString().trim().isEmpty())
+                    civil_password_edit_text.setError("Password is empty!");
+                if (civil_username_edit_text.getText().toString().trim().isEmpty())
+                    civil_username_edit_text.setError("Username is empty!");
+                if (civil_username_edit_text.getText().toString().trim().length() > 0 &&
+                civil_password_edit_text.getText().toString().trim().length() > 0) {
+                    loginInDatabaseAsCivil(civil_username_edit_text.getText().toString().trim(),
+                            civil_password_edit_text.getText().toString().trim());
+                }
             }
         });
 
@@ -71,4 +80,8 @@ public class LoginCivilActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(LoginCivilActivity.this, MainActivity.class));
+    }
 }

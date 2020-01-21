@@ -3,4 +3,5 @@
     <string name="title_activity_mark_pothole">Map</string>
     <string name="title_activity_govt_see_full_complaint">Map</string>
     <string name="title_activity_civil_see_full_complaint">Map</string>
+    <string name="title_activity_user_see_full_history">Map</string>
 </resources>

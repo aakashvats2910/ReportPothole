@@ -3,18 +3,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:context=".GovtSeeFullComplaint"
+        tools:context=".UserSeeFullHistory"
         android:layout_weight="1"/>
 
     <View
@@ -28,14 +26,14 @@
         android:layout_weight="1">
 
         <ImageView
-            android:id="@+id/fullcomplaint_image_view"
+            android:id="@+id/user_fullhistory_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"/>
 
         <TextView
             android:layout_marginTop="16dp"
-            android:id="@+id/fullcomplaint_name_text_view"
+            android:id="@+id/user_fullhistory_name_text_view"
             android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,14 +42,14 @@
             android:textColor="#FF5722"/>
 
         <TextView
-            android:id="@+id/fullcomplaint_number_text_view"
+            android:id="@+id/user_fullhistory_number_text_view"
             android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+91 8168926684"
             android:textSize="18sp"
             android:textColor="#FF5722"
-            android:layout_below="@id/fullcomplaint_name_text_view"/>
+            android:layout_below="@id/user_fullhistory_name_text_view"/>
 
     </RelativeLayout>
 
@@ -62,7 +60,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/fullcomplaint_comment_text_view"
+            android:id="@+id/user_fullhistory_comment_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#EEF7F2F2"
@@ -76,22 +74,19 @@
             android:scrollHorizontally="false"
             android:layout_margin="4dp"
             android:padding="8dp"
-            android:layout_above="@id/fullcomplaint_choose_agency_button"
             android:hint="Add comment!" />
 
-        <Button
-            android:id="@+id/fullcomplaint_choose_agency_button"
-            android:layout_alignParentBottom="true"
+        <TextView
+            android:id="@+id/user_fullhistory_status_text_view"
+            android:layout_below="@id/user_fullhistory_comment_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CHOOSE AGENCY"
-            android:background="@drawable/round_button"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"/>
+            android:textSize="22sp"
+            android:background="#EEF7F2F2"
+            android:layout_margin="4dp"
+            android:padding="8dp"
+            android:text="STATUS : "/>
 
     </RelativeLayout>
 
 </LinearLayout>
-

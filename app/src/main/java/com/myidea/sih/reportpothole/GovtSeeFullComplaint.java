@@ -1,5 +1,6 @@
 package com.myidea.sih.reportpothole;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
@@ -19,9 +20,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.myidea.sih.reportpothole.complaint.UserComplaint;
 import com.myidea.sih.reportpothole.database.Fire;
+import com.myidea.sih.reportpothole.status.StatusUpdater;
 import com.myidea.sih.reportpothole.util.UserComplaintToShow;
 
 import org.w3c.dom.Text;
@@ -44,6 +50,11 @@ public class GovtSeeFullComplaint extends FragmentActivity implements OnMapReady
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        setTitle("Full Complaint");
+
+        if (UserComplaintToShow.toShow.status.equals("SENT"))
+            StatusUpdater.updateStatus("SEEN");
 
         fullcomplaint_image_view = findViewById(R.id.fullcomplaint_image_view);
         fullcomplaint_name_text_view = findViewById(R.id.fullcomplaint_name_text_view);
@@ -96,4 +107,6 @@ public class GovtSeeFullComplaint extends FragmentActivity implements OnMapReady
         mMap.addMarker(new MarkerOptions().position(markedLocatoin).title("Pothole"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markedLocatoin, 18f));
     }
+
+
 }

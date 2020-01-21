@@ -41,12 +41,18 @@
         android:background="#EEF7F2F2"
         android:padding="8dp"
         android:layout_margin="4dp"
-        android:hint="Complainer Name"/>
+        android:hint="Complainer Name"
+        android:inputType="textPersonName"/>
 
     <Button
         android:id="@+id/send_complaint_button"
         android:text="SEND COMPLAINT"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_button"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"/>
 
 </LinearLayout>

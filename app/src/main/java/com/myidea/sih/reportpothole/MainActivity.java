@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +18,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.myidea.sih.reportpothole.database.Fire;
 import com.myidea.sih.reportpothole.user.UserDetails;
+import com.myidea.sih.reportpothole.user_persistance.UserPersistance;
 import com.myidea.sih.reportpothole.util.CodeSent;
 import com.myidea.sih.reportpothole.util.MyRandom;
 
@@ -35,8 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        startActivity(new Intent(MainActivity.this, MarkPotholeActivity.class));
-//        System.out.println("()()()()" + MyRandom.makeRandom(30));
+        setTitle("Sign In");
 
         // Instantizing the firebase authentication
         Fire.firebaseAuth = FirebaseAuth.getInstance();
@@ -52,8 +54,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO check the input of the mobile number and its validtion.
-                //To sed OTP to the entered mobile number.
-                senOTP("+91" + mobile_edit_text.getText().toString(), MainActivity.this);
+                if (mobile_edit_text.getText().length() < 10) {
+                    mobile_edit_text.setError("Number less than 10 digits");
+                } else {
+                    //To sed OTP to the entered mobile number.
+                    senOTP("+91" + mobile_edit_text.getText().toString(), MainActivity.this);
+                }
             }
         });
 
@@ -72,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, LoginCivilActivity.class));
             }
         });
+
+        // To log in user if already logged in ..
+        if (!UserPersistance.getDefaults("userid", getApplicationContext()).trim().isEmpty() &&
+        UserPersistance.getDefaults("numberforpassing", getApplicationContext()).equals("" + 1234)) {
+            startActivity(new Intent(MainActivity.this, MarkPotholeActivity.class));
+        }
 
     }
 
@@ -113,4 +125,8 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+    }
 }

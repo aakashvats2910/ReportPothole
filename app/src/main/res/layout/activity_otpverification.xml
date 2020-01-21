@@ -17,13 +17,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter OTP"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:background="@drawable/round_edit_text"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
 
         <Button
             android:id="@+id/verify_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="VERIFY"/>
+            android:text="VERIFY"
+            android:background="@drawable/round_button"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="4dp"/>
 
     </LinearLayout>
 

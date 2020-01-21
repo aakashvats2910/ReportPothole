@@ -3,6 +3,7 @@ package com.myidea.sih.reportpothole;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,6 +17,7 @@ import com.myidea.sih.reportpothole.array_adapters.ComplaintAdapter;
 import com.myidea.sih.reportpothole.array_adapters.SelectAgencyAdapter;
 import com.myidea.sih.reportpothole.complaint.UserComplaint;
 import com.myidea.sih.reportpothole.database.Fire;
+import com.myidea.sih.reportpothole.status.StatusUpdater;
 import com.myidea.sih.reportpothole.util.UserComplaintToShow;
 
 import java.util.ArrayList;
@@ -32,6 +34,8 @@ public class GovtSelectAgencyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_govt_select_agency);
+
+        setTitle("Select Agency");
 
         govt_see_agency_list_view = findViewById(R.id.govt_see_agency_list_view);
 
@@ -62,8 +66,14 @@ public class GovtSelectAgencyActivity extends AppCompatActivity {
         govt_see_agency_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                govt_see_agency_list_view.setBackgroundResource(R.drawable.disabled_round);
+                govt_see_agency_list_view.setEnabled(false);
+
                 final String agencyName = agencyList.get(position);
                 System.out.println("()()()()" + agencyName);
+
+                StatusUpdater.updateStatus("PROBLEM FORWARDED TO CIVIL AGENCY");
 
                 // Getting the required unique complaint key!
                 Query query = Fire.complaintListDatabaseReference.orderByChild("imageUniqueID").equalTo(UserComplaintToShow.toShow.imageUniqueID);
@@ -73,6 +83,9 @@ public class GovtSelectAgencyActivity extends AppCompatActivity {
                         for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()) {
                             Fire.civilAgencyDatabaseReference.child(agencyName).child("COMPLAINTS_ASSIGNED").child(dataSnapshot1.getKey()).setValue(dataSnapshot1.getKey());
                         }
+
+                        startActivity(new Intent(GovtSelectAgencyActivity.this, SuccessActivityGovt.class));
+
                     }
 
                     @Override

@@ -2,8 +2,11 @@ package com.myidea.sih.reportpothole;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +19,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
+import com.myidea.sih.reportpothole.complaint.UserComplaint;
+import com.myidea.sih.reportpothole.data_helper.DataFramework;
 import com.myidea.sih.reportpothole.database.Fire;
+import com.myidea.sih.reportpothole.status.StatusUpdater;
+import com.myidea.sih.reportpothole.util.AgencyName;
 import com.myidea.sih.reportpothole.util.UserComplaintToShow;
 
 public class CivilSeeFullComplaint extends FragmentActivity implements OnMapReadyCallback {
@@ -25,6 +32,7 @@ public class CivilSeeFullComplaint extends FragmentActivity implements OnMapRead
     private TextView civil_fullcomplaint_name_text_view;
     private TextView civil_fullcomplaint_number_text_view;
     private TextView civil_fullcomplaint_comment_text_view;
+    private Button civil_fullcomplaint_mark_complete;
 
     private GoogleMap mMap;
 
@@ -37,10 +45,16 @@ public class CivilSeeFullComplaint extends FragmentActivity implements OnMapRead
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        setTitle("Full Complaint");
+
+        if (UserComplaintToShow.toShow.status.equals("PROBLEM FORWARDED TO CIVIL AGENCY"))
+            StatusUpdater.updateStatus("VERIFIED");
+
         civil_fullcomplaint_name_text_view = findViewById(R.id.civil_fullcomplaint_name_text_view);
         civil_fullcomplaint_number_text_view = findViewById(R.id.civil_fullcomplaint_number_text_view);
         civil_fullcomplaint_comment_text_view = findViewById(R.id.civil_fullcomplaint_comment_text_view);
         civil_fullcomplaint_image_view = findViewById(R.id.civil_fullcomplaint_image_view);
+        civil_fullcomplaint_mark_complete = findViewById(R.id.civil_fullcomplaint_mark_complete);
 
         civil_fullcomplaint_name_text_view.setText(UserComplaintToShow.toShow.complainerName);
         civil_fullcomplaint_number_text_view.setText(UserComplaintToShow.toShow.mobileNumber);
@@ -53,6 +67,16 @@ public class CivilSeeFullComplaint extends FragmentActivity implements OnMapRead
                 Glide.with(getApplicationContext())
                         .load(uri)
                         .into(civil_fullcomplaint_image_view);
+            }
+        });
+
+        civil_fullcomplaint_mark_complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                civil_fullcomplaint_mark_complete.setBackgroundResource(R.drawable.disabled_round);
+                civil_fullcomplaint_mark_complete.setEnabled(false);
+                StatusUpdater.updateStatus("PROBLEM SOLVED");
+                startActivity(new Intent(CivilSeeFullComplaint.this, SuccessActivityCivil.class));
             }
         });
 
@@ -76,5 +100,10 @@ public class CivilSeeFullComplaint extends FragmentActivity implements OnMapRead
         LatLng potholeLocation = new LatLng(UserComplaintToShow.toShow.lat, UserComplaintToShow.toShow.lng);
         mMap.addMarker(new MarkerOptions().position(potholeLocation).title("Pothole"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(potholeLocation, 18f));
+    }
+
+    @Override
+    public void onBackPressed() {
+        DataFramework.mainForCivilInside(AgencyName.agencyName, getApplicationContext());
     }
 }

@@ -9,6 +9,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -47,6 +48,8 @@ public class SendPotholeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_pothole);
 
+        setTitle("Send Pothole Data");
+
         pothole_image_view = findViewById(R.id.pothole_image_view);
         send_complaint_button = findViewById(R.id.send_complaint_button);
         comment_edit_text = findViewById(R.id.comment_edit_text);
@@ -56,12 +59,12 @@ public class SendPotholeActivity extends AppCompatActivity {
         pothole_image_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("()()()() ONCLICK");
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(SendPotholeActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_ACCESS_REQUEST);
                 } else {
                     dispatchTakePictureIntent();
                 }
-
             }
         });
 
@@ -69,17 +72,23 @@ public class SendPotholeActivity extends AppCompatActivity {
         send_complaint_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                send_complaint_button.setBackgroundResource(R.drawable.disabled_round);
+                send_complaint_button.setEnabled(false);
+                if (complainer_name_edit_text.getText().toString().isEmpty()) {
+                    complainer_name_edit_text.setError("Name is empty!");
+                }
                 try {
                     if (isPhotoClicked) {
                         // Sending the complaint to the database.
                         UserComplaint userComplaint = new UserComplaint(
-                                comment_edit_text.getText().toString(),
+                                comment_edit_text.getText().toString().trim(),
                                 SavedLatLng.lat,
                                 SavedLatLng.lng,
-                                complainer_name_edit_text.getText().toString(),
+                                complainer_name_edit_text.getText().toString().trim(),
                                 UserDetails.userID,
                                 UserDetails.mobileNumber,
-                                uploadImage(capturedImageGlobal)
+                                uploadImage(capturedImageGlobal),
+                                "SENT"
                         );
                         Fire.complaintListDatabaseReference.push().setValue(userComplaint);
                     } else {
@@ -89,7 +98,6 @@ public class SendPotholeActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     System.out.println("()()()()" + e.toString());
                 }
-
             }
         });
 
@@ -141,7 +149,7 @@ public class SendPotholeActivity extends AppCompatActivity {
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                System.out.println("()()()() UPLOADED SUCCESSFULLY");
+                startActivity(new Intent(SendPotholeActivity.this, SuccessActivity.class));
                 Toast.makeText(SendPotholeActivity.this, "SUCCESSFULLY UPLOADED", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {

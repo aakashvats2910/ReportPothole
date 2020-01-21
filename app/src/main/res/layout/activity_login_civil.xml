@@ -17,20 +17,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="User ID"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress"
+            android:background="@drawable/round_edit_text"
+            android:layout_marginBottom="4dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
 
         <EditText
             android:id="@+id/civil_password_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:background="@drawable/round_edit_text"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
 
         <Button
             android:id="@+id/civil_login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="LOG IN"/>
+            android:text="LOG IN"
+            android:background="@drawable/round_button"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="4dp"/>
 
     </LinearLayout>
 

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.myidea.sih.reportpothole">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -29,7 +27,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".SuccessActivityCivil"></activity>
+        <activity android:name=".SuccessActivityGovt" />
+        <activity android:name=".SuccessActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -43,22 +43,56 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:name=".UserSeeFullHistory"
+            android:label="@string/title_activity_user_see_full_history" />
+        <activity android:name=".UserHistoryActivity" />
+        <activity
             android:name=".CivilSeeFullComplaint"
-            android:label="@string/title_activity_civil_see_full_complaint"></activity>
-        <activity android:name=".CivilInsideActivity" />
-        <activity android:name=".GovtSelectAgencyActivity" />
+            android:configChanges="orientation"
+            android:label="@string/title_activity_civil_see_full_complaint"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CivilInsideActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GovtSelectAgencyActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".GovtSeeFullComplaint"
-            android:label="@string/title_activity_govt_see_full_complaint" />
-        <activity android:name=".GovtInsideActivity" />
-        <activity android:name=".LoginGovtActivity" />
-        <activity android:name=".LoginCivilActivity" />
-        <activity android:name=".SendPotholeActivity" />
+            android:configChanges="orientation"
+            android:label="@string/title_activity_govt_see_full_complaint"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GovtInsideActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginGovtActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginCivilActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SendPotholeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MarkPotholeActivity"
-            android:label="@string/title_activity_mark_pothole" />
-        <activity android:name=".OTPVerificationActivity" />
-        <activity android:name=".MainActivity">
+            android:configChanges="orientation"
+            android:label="@string/title_activity_mark_pothole"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OTPVerificationActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

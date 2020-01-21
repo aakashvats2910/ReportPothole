@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.myidea.sih.reportpothole.database.Fire;
+import com.myidea.sih.reportpothole.user_persistance.UserPersistance;
 
 public class LoginGovtActivity extends AppCompatActivity {
 
@@ -26,6 +27,8 @@ public class LoginGovtActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_govt);
 
+        setTitle("Govt. Login");
+
         govt_username_edit_text = findViewById(R.id.govt_username_edit_text);
         govt_password_edit_text = findViewById(R.id.govt_password_edit_text);
         govt_login_button = findViewById(R.id.govt_login_button);
@@ -33,8 +36,15 @@ public class LoginGovtActivity extends AppCompatActivity {
         govt_login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginInDatabaseAsGovt(govt_username_edit_text.getText().toString(),
-                        govt_password_edit_text.getText().toString());
+                if (govt_password_edit_text.getText().toString().trim().isEmpty())
+                    govt_password_edit_text.setError("Password is empty!");
+                if (govt_username_edit_text.getText().toString().trim().isEmpty())
+                    govt_username_edit_text.setError("Username is empty!");
+                if (govt_username_edit_text.getText().toString().trim().length() > 0 &&
+                govt_password_edit_text.getText().toString().trim().length() > 0) {
+                    loginInDatabaseAsGovt(govt_username_edit_text.getText().toString().trim(),
+                            govt_password_edit_text.getText().toString().trim());
+                }
             }
         });
     }

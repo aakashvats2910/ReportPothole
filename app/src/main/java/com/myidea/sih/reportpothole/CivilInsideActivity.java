@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -19,6 +22,7 @@ import com.myidea.sih.reportpothole.array_adapters.ComplaintAdapter;
 import com.myidea.sih.reportpothole.complaint.UserComplaint;
 import com.myidea.sih.reportpothole.data_helper.DataFramework;
 import com.myidea.sih.reportpothole.database.Fire;
+import com.myidea.sih.reportpothole.user_persistance.UserPersistance;
 import com.myidea.sih.reportpothole.util.AgencyName;
 import com.myidea.sih.reportpothole.util.UserComplaintToShow;
 
@@ -30,30 +34,100 @@ public class CivilInsideActivity extends AppCompatActivity {
     ListView just_civil_list_view;
     CivilComplaintAdapter civilComplaintAdapter;
     List<UserComplaint> userComplaintList;
-    List<String> uniqueReferenceIDList;
+
+    List<UserComplaint> unseenUserComplaint;
+    List<UserComplaint> verifiedUserComplaint;
+    List<UserComplaint> completeUserComplaint;
+
+    List<UserComplaint> currentComplaintList;
+
+    private Button unseen_button_civil;
+    private Button verified_button_civil;
+    private Button completed_button_civil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_civil_inside);
 
+        setTitle("Complaint List");
+
+        unseenUserComplaint = new ArrayList<>();
+        verifiedUserComplaint = new ArrayList<>();
+        completeUserComplaint = new ArrayList<>();
+
         just_civil_list_view = findViewById(R.id.just_civil_list_view);
+
+        unseen_button_civil = findViewById(R.id.unseen_button_civil);
+        verified_button_civil = findViewById(R.id.verified_button_civil);
+        completed_button_civil = findViewById(R.id.completed_button_civil);
 
         // Importing the value from data framework to the global variable in this class.
         userComplaintList = DataFramework.userComplaintList;
 
-        civilComplaintAdapter = new CivilComplaintAdapter(CivilInsideActivity.this, R.layout.civil_list_layout, userComplaintList);
+        currentComplaintList = userComplaintList;
+
+        for (int i = 0; i <= userComplaintList.size()-1; i++) {
+            if (userComplaintList.get(i).status.equals("VERIFIED")) {
+                verifiedUserComplaint.add(userComplaintList.get(i));
+            } else if (userComplaintList.get(i).status.equals("PROBLEM FORWARDED TO CIVIL AGENCY")) {
+                unseenUserComplaint.add(userComplaintList.get(i));
+            } else {
+                completeUserComplaint.add(userComplaintList.get(i));
+            }
+        }
+
+        civilComplaintAdapter = new CivilComplaintAdapter(CivilInsideActivity.this, R.layout.civil_list_layout, unseenUserComplaint);
         just_civil_list_view.setAdapter(civilComplaintAdapter);
 
         just_civil_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                UserComplaintToShow.toShow = userComplaintList.get(position);
+                UserComplaintToShow.toShow = currentComplaintList.get(position);
                 startActivity(new Intent(CivilInsideActivity.this, CivilSeeFullComplaint.class));
+            }
+        });
+
+        unseen_button_civil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                unseen_button_civil.setBackgroundResource(R.drawable.disabled_round);
+                verified_button_civil.setBackgroundResource(R.drawable.round_button);
+                currentComplaintList = unseenUserComplaint;
+                completed_button_civil.setBackgroundResource(R.drawable.round_button);
+                civilComplaintAdapter = new CivilComplaintAdapter(CivilInsideActivity.this, R.layout.civil_list_layout, unseenUserComplaint);
+                just_civil_list_view.setAdapter(civilComplaintAdapter);
+            }
+        });
+
+        verified_button_civil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                unseen_button_civil.setBackgroundResource(R.drawable.round_button);
+                verified_button_civil.setBackgroundResource(R.drawable.disabled_round);
+                completed_button_civil.setBackgroundResource(R.drawable.round_button);
+                currentComplaintList = verifiedUserComplaint;
+                civilComplaintAdapter = new CivilComplaintAdapter(CivilInsideActivity.this, R.layout.civil_list_layout, verifiedUserComplaint);
+                just_civil_list_view.setAdapter(civilComplaintAdapter);
+            }
+        });
+
+        completed_button_civil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                unseen_button_civil.setBackgroundResource(R.drawable.round_button);
+                verified_button_civil.setBackgroundResource(R.drawable.round_button);
+                completed_button_civil.setBackgroundResource(R.drawable.disabled_round);
+                currentComplaintList = completeUserComplaint;
+                civilComplaintAdapter = new CivilComplaintAdapter(CivilInsideActivity.this, R.layout.civil_list_layout, completeUserComplaint);
+                just_civil_list_view.setAdapter(civilComplaintAdapter);
             }
         });
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(CivilInsideActivity.this, LoginCivilActivity.class));
+    }
 }

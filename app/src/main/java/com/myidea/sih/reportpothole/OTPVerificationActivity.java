@@ -7,7 +7,9 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +24,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.myidea.sih.reportpothole.database.Fire;
 import com.myidea.sih.reportpothole.user.UserDetails;
+import com.myidea.sih.reportpothole.user_persistance.UserPersistance;
 import com.myidea.sih.reportpothole.util.CodeSent;
 
 public class OTPVerificationActivity extends AppCompatActivity {
@@ -35,6 +38,8 @@ public class OTPVerificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otpverification);
+
+        setTitle("Verify OTP");
 
         otp_edit_text = findViewById(R.id.otp_edit_text);
         verify_button = findViewById(R.id.verify_button);
@@ -78,7 +83,7 @@ public class OTPVerificationActivity extends AppCompatActivity {
         // Checking for the result of location access.
         if (requestCode == LOCATION_REQUEST) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startActivity(new Intent(OTPVerificationActivity.this, MarkPotholeActivity.class));
+                startActivityForResult(new Intent(OTPVerificationActivity.this, MarkPotholeActivity.class), 0);
             } else {
                 Toast.makeText(getApplicationContext(), "Please provide location access", Toast.LENGTH_SHORT).show();
             }
@@ -90,6 +95,11 @@ public class OTPVerificationActivity extends AppCompatActivity {
     public void addUserDetails() {
         UserDetails.userID = Fire.firebaseAuth.getUid();
         Fire.initializeUserToDatabase(UserDetails.userID);
+
+        UserPersistance.setDefaults("userid", UserDetails.userID, getApplicationContext());
+        UserPersistance.setDefaults("numberforpassing", "" + 1234, getApplicationContext());
+
+
     }
 
 }
