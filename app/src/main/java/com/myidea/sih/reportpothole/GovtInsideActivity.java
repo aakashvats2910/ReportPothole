@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +38,8 @@ public class GovtInsideActivity extends AppCompatActivity {
     private Button unseen_button_govt;
     private Button forwarded_button_govt;
 
+    private ImageButton refresh_govt_inside;
+
     private List<UserComplaint> currentList;
 
     @Override
@@ -50,6 +53,8 @@ public class GovtInsideActivity extends AppCompatActivity {
         seen_button_govt = findViewById(R.id.seen_button_govt);
         unseen_button_govt = findViewById(R.id.unseen_button_govt);
         forwarded_button_govt = findViewById(R.id.forwarded_button_govt);
+
+        refresh_govt_inside = findViewById(R.id.refresh_govt_inside);
 
         userComplaintList = new ArrayList<>();
         unseenUserComplaints = new ArrayList<>();
@@ -99,6 +104,7 @@ public class GovtInsideActivity extends AppCompatActivity {
         seen_button_govt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setTitle("Seen");
                 seen_button_govt.setBackgroundResource(R.drawable.disabled_round);
                 unseen_button_govt.setBackgroundResource(R.drawable.round_button);
                 forwarded_button_govt.setBackgroundResource(R.drawable.round_button);
@@ -111,6 +117,7 @@ public class GovtInsideActivity extends AppCompatActivity {
         unseen_button_govt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setTitle("Unseen");
                 seen_button_govt.setBackgroundResource(R.drawable.round_button);
                 unseen_button_govt.setBackgroundResource(R.drawable.disabled_round);
                 forwarded_button_govt.setBackgroundResource(R.drawable.round_button);
@@ -123,12 +130,21 @@ public class GovtInsideActivity extends AppCompatActivity {
         forwarded_button_govt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setTitle("Forwarded");
                 seen_button_govt.setBackgroundResource(R.drawable.round_button);
                 unseen_button_govt.setBackgroundResource(R.drawable.round_button);
                 forwarded_button_govt.setBackgroundResource(R.drawable.disabled_round);
                 currentList = forwardedToAgencyUserComplaints;
                 complaintAdapter = new ComplaintAdapter(GovtInsideActivity.this, R.layout.govt_list_layout, forwardedToAgencyUserComplaints);
                 just_govt_list_view.setAdapter(complaintAdapter);
+            }
+        });
+
+        refresh_govt_inside.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(getIntent());
             }
         });
 
@@ -144,4 +160,8 @@ public class GovtInsideActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(GovtInsideActivity.this, LoginGovtActivity.class));
+    }
 }

@@ -72,4 +72,9 @@ public class LoginGovtActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(LoginGovtActivity.this, MainActivity.class));
+    }
 }

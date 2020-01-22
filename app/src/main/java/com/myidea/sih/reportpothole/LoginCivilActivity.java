@@ -66,7 +66,7 @@ public class LoginCivilActivity extends AppCompatActivity {
                         AgencyName.agencyName = snapshot.getKey();
                         // Start collecting the data here only.
                         // This will take care of sending it to the next required activity.
-                        DataFramework.mainForCivilInside(AgencyName.agencyName, LoginCivilActivity.this);
+                        DataFramework.mainForCivilInside(AgencyName.agencyName, getApplicationContext());
                         return;
                     }
                 }

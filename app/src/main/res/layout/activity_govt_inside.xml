@@ -52,4 +52,14 @@
 
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/refresh_govt_inside"
+        android:layout_alignParentEnd="true"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:text="R"
+        android:src="@drawable/reload"
+        android:scaleType="fitXY"
+        android:background="@drawable/refresh_round"/>
+
 </RelativeLayout>

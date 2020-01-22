@@ -12,7 +12,9 @@ import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,6 +47,8 @@ public class CivilInsideActivity extends AppCompatActivity {
     private Button verified_button_civil;
     private Button completed_button_civil;
 
+    private ImageButton refresh_civil_inside;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +61,8 @@ public class CivilInsideActivity extends AppCompatActivity {
         completeUserComplaint = new ArrayList<>();
 
         just_civil_list_view = findViewById(R.id.just_civil_list_view);
+
+        refresh_civil_inside = findViewById(R.id.refresh_civil_inside);
 
         unseen_button_civil = findViewById(R.id.unseen_button_civil);
         verified_button_civil = findViewById(R.id.verified_button_civil);
@@ -121,6 +127,15 @@ public class CivilInsideActivity extends AppCompatActivity {
                 currentComplaintList = completeUserComplaint;
                 civilComplaintAdapter = new CivilComplaintAdapter(CivilInsideActivity.this, R.layout.civil_list_layout, completeUserComplaint);
                 just_civil_list_view.setAdapter(civilComplaintAdapter);
+            }
+        });
+
+        refresh_civil_inside.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(CivilInsideActivity.this, "CLICKED", Toast.LENGTH_SHORT).show();
+                finish();
+                DataFramework.mainForCivilInside(AgencyName.agencyName, getApplicationContext());
             }
         });
 

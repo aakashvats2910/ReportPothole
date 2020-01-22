@@ -83,7 +83,7 @@ public class DataFramework {
     }
 
     private static void sendToCivilInside(Context context) {
-        context.startActivity(new Intent(context, CivilInsideActivity.class));
+        context.startActivity(new Intent(context, CivilInsideActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
 }

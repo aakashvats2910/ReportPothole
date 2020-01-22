@@ -98,4 +98,9 @@ public class GovtSelectAgencyActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(GovtSelectAgencyActivity.this, GovtInsideActivity.class));
+    }
 }

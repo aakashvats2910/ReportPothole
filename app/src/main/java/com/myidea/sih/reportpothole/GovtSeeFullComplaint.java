@@ -78,6 +78,15 @@ public class GovtSeeFullComplaint extends FragmentActivity implements OnMapReady
             }
         });
 
+        if (UserComplaintToShow.toShow.status.equals("SEEN") ||
+                UserComplaintToShow.toShow.status.equals("SENT")) {
+            fullcomplaint_choose_agency_button.setEnabled(true);
+            fullcomplaint_choose_agency_button.setBackgroundResource(R.drawable.round_button);
+        } else {
+            fullcomplaint_choose_agency_button.setEnabled(false);
+            fullcomplaint_choose_agency_button.setBackgroundResource(R.drawable.disabled_round);
+        }
+
         fullcomplaint_choose_agency_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

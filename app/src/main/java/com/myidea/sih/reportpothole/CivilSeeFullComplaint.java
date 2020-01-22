@@ -70,6 +70,14 @@ public class CivilSeeFullComplaint extends FragmentActivity implements OnMapRead
             }
         });
 
+        if (UserComplaintToShow.toShow.status.equals("PROBLEM SOLVED")) {
+            civil_fullcomplaint_mark_complete.setBackgroundResource(R.drawable.disabled_round);
+            civil_fullcomplaint_mark_complete.setEnabled(false);
+        } else {
+            civil_fullcomplaint_mark_complete.setBackgroundResource(R.drawable.round_button);
+            civil_fullcomplaint_mark_complete.setEnabled(true);
+        }
+
         civil_fullcomplaint_mark_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +112,7 @@ public class CivilSeeFullComplaint extends FragmentActivity implements OnMapRead
 
     @Override
     public void onBackPressed() {
+        finish();
         DataFramework.mainForCivilInside(AgencyName.agencyName, getApplicationContext());
     }
 }
