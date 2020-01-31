@@ -48,8 +48,12 @@ public class OTPVerificationActivity extends AppCompatActivity {
         verify_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(CodeSent.codeSent, otp_edit_text.getText().toString());
-                signInWithPhoneAuthCredential(phoneAuthCredential, OTPVerificationActivity.this);
+                if (otp_edit_text.getText().toString().length() != 6) {
+                    otp_edit_text.setError("Invalid OTP");
+                } else {
+                    PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(CodeSent.codeSent, otp_edit_text.getText().toString());
+                    signInWithPhoneAuthCredential(phoneAuthCredential, OTPVerificationActivity.this);
+                }
             }
         });
 
@@ -73,6 +77,7 @@ public class OTPVerificationActivity extends AppCompatActivity {
                             }
                         } else {
                             System.out.println("()()()() OTP FAILED");
+                            Toast.makeText(OTPVerificationActivity.this, "Incorrect OTP", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

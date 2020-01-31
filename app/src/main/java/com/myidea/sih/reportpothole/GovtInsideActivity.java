@@ -89,6 +89,8 @@ public class GovtInsideActivity extends AppCompatActivity {
                 try {
                     complaintAdapter = new ComplaintAdapter(GovtInsideActivity.this, R.layout.govt_list_layout, unseenUserComplaints);
                     just_govt_list_view.setAdapter(complaintAdapter);
+
+                    currentList = unseenUserComplaints;
                 } catch (Exception e) {
                     System.out.println("()()()()" + e.toString());
                 }

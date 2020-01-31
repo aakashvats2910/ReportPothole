@@ -7,10 +7,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private Button login_govt_button;
     private Button login_civil_button;
 
+    private VideoView video_player;
+
     private String code;
 
     @Override
@@ -44,18 +50,31 @@ public class MainActivity extends AppCompatActivity {
         Fire.firebaseAuth = FirebaseAuth.getInstance();
         Fire.mandatoryToRun();
 
+        video_player = findViewById(R.id.video_player);
+
         mobile_edit_text = findViewById(R.id.mobile_edit_text);
         send_otp_button = findViewById(R.id.send_otp_button);
         login_govt_button = findViewById(R.id.login_govt_button);
         login_civil_button = findViewById(R.id.login_civil_button);
+
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.rain);
+        video_player.setVideoURI(uri);
+        video_player.start();
+
+        video_player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+            }
+        });
 
         // For sending otp button.
         send_otp_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO check the input of the mobile number and its validtion.
-                if (mobile_edit_text.getText().length() < 10) {
-                    mobile_edit_text.setError("Number less than 10 digits");
+                if (mobile_edit_text.getText().toString().length() != 10) {
+                    mobile_edit_text.setError("Invalid number!");
                 } else {
                     //To sed OTP to the entered mobile number.
                     senOTP("+91" + mobile_edit_text.getText().toString(), MainActivity.this);
@@ -119,6 +138,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, OTPVerificationActivity.class);
                 // Saving the mobile number of the user in UserDetails.
                 UserDetails.mobileNumber = mobile_edit_text.getText().toString();
+
+                // Comment
+                UserPersistance.setDefaults("usermobile", UserDetails.mobileNumber, getApplicationContext());
+
                 startActivity(intent);
                 CodeSent.codeSent = s;
             }

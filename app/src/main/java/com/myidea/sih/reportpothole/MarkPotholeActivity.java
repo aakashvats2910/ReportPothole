@@ -57,6 +57,7 @@ public class MarkPotholeActivity extends FragmentActivity implements OnMapReadyC
         checkLocation(getApplicationContext());
 
         UserDetails.userID = UserPersistance.getDefaults("userid",getApplicationContext());
+        UserDetails.mobileNumber = UserPersistance.getDefaults("usermobile", getApplicationContext());
     }
 
 

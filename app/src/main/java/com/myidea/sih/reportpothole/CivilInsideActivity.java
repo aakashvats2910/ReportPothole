@@ -86,6 +86,8 @@ public class CivilInsideActivity extends AppCompatActivity {
         civilComplaintAdapter = new CivilComplaintAdapter(CivilInsideActivity.this, R.layout.civil_list_layout, unseenUserComplaint);
         just_civil_list_view.setAdapter(civilComplaintAdapter);
 
+        currentComplaintList = unseenUserComplaint;
+
         just_civil_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
