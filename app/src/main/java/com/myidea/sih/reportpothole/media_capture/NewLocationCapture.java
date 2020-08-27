@@ -1,5 +1,10 @@
 package com.myidea.sih.reportpothole.media_capture;
 
+// 1. Before using it change the package name
+// 2. add this dependency
+// // Google Location
+//    implementation 'com.google.android.gms:play-services-location:17.0.0'
+
 import android.content.Context;
 import android.location.Location;
 import android.os.Looper;
